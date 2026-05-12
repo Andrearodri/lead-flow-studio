@@ -152,8 +152,30 @@
     border-color: var(--color-border);
   }
 
+  html, body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
 }
+
+@layer utilities {
+  .kanban-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
+  .kanban-scroll::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--foreground) 12%, transparent);
+    border-radius: 999px;
+  }
+  .kanban-scroll::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklab, var(--foreground) 20%, transparent);
+  }
+}
+
+@keyframes lead-card-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-lead-in { animation: lead-card-in 280ms ease-out both; }
