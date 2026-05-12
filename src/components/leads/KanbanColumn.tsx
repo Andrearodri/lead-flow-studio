@@ -10,9 +10,10 @@ interface Props {
   hint: string;
   accent: string;
   leads: Lead[];
+  onSelectLead?: (lead: Lead) => void;
 }
 
-export function KanbanColumn({ id, title, hint, accent, leads }: Props) {
+export function KanbanColumn({ id, title, hint, accent, leads, onSelectLead }: Props) {
   const { setNodeRef, isOver } = useDroppable({ id });
 
   return (
@@ -43,7 +44,7 @@ export function KanbanColumn({ id, title, hint, accent, leads }: Props) {
         )}
       >
         {leads.map((lead) => (
-          <LeadCard key={lead.id} lead={lead} />
+          <LeadCard key={lead.id} lead={lead} onSelect={onSelectLead} />
         ))}
         {leads.length === 0 && (
           <div className="text-center text-[11px] text-muted-foreground py-8">
