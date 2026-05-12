@@ -44,7 +44,7 @@ export function KanbanColumn({ id, title, hint, accent, leads, onSelectLead }: P
         )}
       >
         {leads.map((lead) => (
-          <LeadCard key={lead.id} lead={lead} />
+          <LeadCard key={lead.id} lead={lead} onSelect={onSelectLead} />
         ))}
         {leads.length === 0 && (
           <div className="text-center text-[11px] text-muted-foreground py-8">
