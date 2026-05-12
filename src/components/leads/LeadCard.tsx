@@ -46,6 +46,7 @@ export function LeadCard({
       style={style}
       {...listeners}
       {...attributes}
+      onClick={() => !overlay && onSelect?.(lead)}
       className={cn(
         "group relative rounded-xl border border-border bg-card p-3.5 cursor-grab active:cursor-grabbing animate-lead-in",
         "shadow-[0_1px_0_0_rgba(0,0,0,0.02)] transition-all duration-200",
