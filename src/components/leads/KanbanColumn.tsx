@@ -10,9 +10,10 @@ interface Props {
   hint: string;
   accent: string;
   leads: Lead[];
+  onSelectLead?: (lead: Lead) => void;
 }
 
-export function KanbanColumn({ id, title, hint, accent, leads }: Props) {
+export function KanbanColumn({ id, title, hint, accent, leads, onSelectLead }: Props) {
   const { setNodeRef, isOver } = useDroppable({ id });
 
   return (
