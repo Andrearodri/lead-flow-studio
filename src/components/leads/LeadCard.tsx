@@ -23,7 +23,15 @@ const serviceTone: Record<string, string> = {
   "Reunião Comercial": "bg-primary/10 text-primary border-primary/20",
 };
 
-export function LeadCard({ lead, overlay = false }: { lead: Lead; overlay?: boolean }) {
+export function LeadCard({
+  lead,
+  overlay = false,
+  onSelect,
+}: {
+  lead: Lead;
+  overlay?: boolean;
+  onSelect?: (lead: Lead) => void;
+}) {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: lead.id,
     data: { lead },
