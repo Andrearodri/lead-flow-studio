@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/sonner";
 import {
   Outlet,
   Link,
@@ -72,10 +73,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "LeadFlow — Gestão de Leads WhatsApp" },
+      { title: "Vetor Opus — Inteligência em Vendas" },
       { name: "description", content: "CRM para qualificação e triagem de leads de WhatsApp para negócios locais." },
-      { name: "author", content: "LeadFlow" },
-      { property: "og:title", content: "LeadFlow — Gestão de Leads WhatsApp" },
+      { name: "author", content: "Vetor Opus" },
+      { property: "og:title", content: "Vetor Opus — Inteligência em Vendas" },
       { property: "og:description", content: "Painel Kanban para qualificar leads de WhatsApp." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -113,6 +114,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <Toaster />
     </QueryClientProvider>
   );
 }

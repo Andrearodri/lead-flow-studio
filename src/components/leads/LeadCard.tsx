@@ -1,8 +1,9 @@
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import { Clock, MoreHorizontal } from "lucide-react";
+import { Clock, MoreHorizontal, MessageCircle } from "lucide-react";
 import { formatEspera, type Lead } from "./mock-data";
 import { cn } from "@/lib/utils";
+import { useTags } from "@/hooks/useTags";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -40,12 +41,32 @@ export function LeadCard({
   const style = transform ? { transform: CSS.Translate.toString(transform) } : undefined;
   const tone = serviceTone[lead.servico] ?? "bg-secondary text-secondary-foreground border-border";
 
+  // Idle detection (lead idle > 48h)
+  const isIdle = lead.esperaMin >= 48 * 60; // 48 hours in minutes
+  const idleDays = Math.floor(lead.esperaMin / (60 * 24));
+
+  // Tags — defensive: fallback to empty array for legacy leads
+  const allTags = useTags();
+  const leadTagIds = lead.tags || [];
+  const resolvedTags = leadTagIds
+    .map((id) => allTags.find((t) => t.id === id))
+    .filter(Boolean);
+
+  const handleWhatsAppClick = (e: React.MouseEvent | React.PointerEvent) => {
+    e.stopPropagation();
+    if (!overlay) {
+      onSelect?.(lead);
+    }
+  };
+
   return (
     <div
       ref={setNodeRef}
       style={style}
       {...listeners}
       {...attributes}
+      // Mantemos o onClick no card caso o usuário queira clicar no card inteiro, 
+      // mas o clique no botão do WhatsApp agora tem e.stopPropagation() e faz o mesmo.
       onClick={() => !overlay && onSelect?.(lead)}
       className={cn(
         "group relative rounded-xl border border-border bg-card p-3.5 cursor-grab active:cursor-grabbing animate-lead-in",
@@ -53,6 +74,7 @@ export function LeadCard({
         "hover:-translate-y-0.5 hover:shadow-[0_8px_24px_-12px_rgba(15,23,42,0.18)] hover:border-primary/30",
         isDragging && !overlay && "opacity-40",
         overlay && "shadow-[0_20px_40px_-15px_rgba(15,23,42,0.35)] rotate-1",
+        isIdle && "ring-1 ring-red-500",
       )}
     >
       <div className="flex items-start justify-between gap-2">
@@ -68,16 +90,50 @@ export function LeadCard({
                 {lead.telefone}
               </span>
             </div>
+            {isIdle && (
+              <div className="mt-1 flex items-center gap-1 text-xs text-red-600">
+                <span role="img" aria-label="alert">⚠️</span>
+                Parado há {idleDays} {idleDays !== 1 ? "dias" : "dia"}
+              </div>
+            )}
           </div>
         </div>
-        <button
-          className="opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-foreground p-1 -m-1 rounded"
-          onPointerDown={(e) => e.stopPropagation()}
-          aria-label="Mais opções"
-        >
-          <MoreHorizontal className="h-4 w-4" />
-        </button>
+        <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5 -m-1">
+          <button
+            className="text-muted-foreground hover:text-emerald-500 hover:bg-emerald-500/10 p-1.5 rounded transition-colors"
+            onPointerDown={(e) => { e.stopPropagation(); }}
+            onClick={handleWhatsAppClick}
+            aria-label="Iniciar WhatsApp"
+          >
+            <MessageCircle className="h-4 w-4" />
+          </button>
+          <button
+            className="text-muted-foreground hover:text-foreground p-1.5 rounded transition-colors"
+            onPointerDown={(e) => e.stopPropagation()}
+            aria-label="Mais opções"
+          >
+            <MoreHorizontal className="h-4 w-4" />
+          </button>
+        </div>
       </div>
+
+      {/* ── Tags do Lead ── */}
+      {resolvedTags.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-1">
+          {resolvedTags.map((tag) => (
+            <span
+              key={tag!.id}
+              className={cn(
+                "inline-flex items-center rounded-md px-1.5 py-0.5 text-[10px] font-semibold",
+                tag!.color,
+                tag!.textColor,
+              )}
+            >
+              {tag!.name}
+            </span>
+          ))}
+        </div>
+      )}
 
       <div className="mt-3 flex items-center justify-between gap-2">
         <span

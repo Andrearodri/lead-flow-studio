@@ -1,4 +1,8 @@
-export type LeadStatus = "novos" | "qualificacao" | "agendamento" | "fechado";
+/**
+ * LeadStatus is now a dynamic string to support user-created funnel columns.
+ * The funnelService is the source of truth for valid column IDs.
+ */
+export type LeadStatus = string;
 
 export interface Lead {
   id: string;
@@ -8,12 +12,18 @@ export interface Lead {
   esperaMin: number;
   status: LeadStatus;
   iniciais: string;
+  /** IDs das tags atribuídas a este lead */
+  tags?: string[];
+  /** Valor estimado do negócio em R$ */
+  valorEstimado?: number;
 }
 
+/** @deprecated Use funnelService.getColumns() instead. Kept for initialization. */
 export const COLUMNS: { id: LeadStatus; title: string; hint: string; accent: string }[] = [
   { id: "novos", title: "Novos Contatos", hint: "Leads que acabaram de chegar", accent: "bg-info" },
   { id: "qualificacao", title: "Em Qualificação", hint: "Conversa em andamento", accent: "bg-warning" },
   { id: "agendamento", title: "Agendamento / Visita", hint: "Reunião marcada", accent: "bg-primary" },
+  { id: "proposta", title: "Proposta / Orçamento", hint: "Proposta enviada ao cliente", accent: "bg-violet-500" },
   { id: "fechado", title: "Fechado / Ganho", hint: "Venda concluída", accent: "bg-success" },
 ];
 
@@ -27,7 +37,16 @@ const make = (
   servico: string,
   esperaMin: number,
   status: LeadStatus,
-): Lead => ({ id, nome, telefone, servico, esperaMin, status, iniciais: ini(nome) });
+): Lead => ({ 
+  id, 
+  nome, 
+  telefone, 
+  servico, 
+  esperaMin, 
+  status, 
+  iniciais: ini(nome),
+  valorEstimado: Math.floor(Math.random() * 15000) + 1000
+});
 
 export const INITIAL_LEADS: Lead[] = [
   make("1", "João Silva", "+55 11 99812-4523", "Consultoria", 12, "novos"),

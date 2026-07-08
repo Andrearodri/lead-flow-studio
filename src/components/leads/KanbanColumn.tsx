@@ -1,11 +1,11 @@
 import { useDroppable } from "@dnd-kit/core";
 import { Plus } from "lucide-react";
 import { LeadCard } from "./LeadCard";
-import type { Lead, LeadStatus } from "./mock-data";
+import type { Lead } from "./mock-data";
 import { cn } from "@/lib/utils";
 
 interface Props {
-  id: LeadStatus;
+  id: string;
   title: string;
   hint: string;
   accent: string;
