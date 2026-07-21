@@ -1,6 +1,6 @@
 # Lead Flow Studio
 
-> Sistema de gestão de leads com interface Kanban interativa, construído com React, TypeScript e TanStack Router.
+> Aplicação de gestão de leads com dashboard, quadro Kanban interativo, organização por etapas do funil de vendas, painel de detalhes e templates de mensagens.
 
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 ![TypeScript](https://img.shields.io/badge/TypeScript-96%25-blue)
@@ -8,94 +8,133 @@
 
 ---
 
-## Sobre o Projeto
+## O Problema
 
-Lead Flow Studio é um sistema de gestão de leads com interface Kanban interativa. O projeto resolve um problema real de equipes comerciais: a falta de visibilidade sobre o pipeline de vendas e o status de cada lead ao longo do funil.
+Equipes comerciais frequentemente perdem leads porque não têm visibilidade clara sobre o pipeline de vendas. Saber em qual etapa cada lead está, o que já foi feito e o que precisa acontecer é essencial para converter mais.
 
-A aplicação permite visualizar, mover e gerenciar leads entre etapas do funil de forma intuitiva, com painel de detalhes, respostas rápidas e organização por status.
+## A Solução
 
----
-
-## Funcionalidades
-
-- **Kanban interativo** com drag and drop entre colunas
-- **Painel de detalhes do lead** (LeadDetailSheet) com informações completas
-- **Respostas rápidas** para agilizar atendimento
-- **Filtros e organização** por status do lead
-- **Interface responsiva** com Tailwind CSS
-- **Navegação tipada** com TanStack Router
+O Lead Flow Studio oferece um painel visual tipo Kanban para organizar leads por etapa do funil, com painel de detalhes completo por lead e templates de mensagens prontos para agilizar o atendimento.
 
 ---
 
-## Tecnologias
+## Funcionalidades Implementadas
 
-| Tecnologia | Uso |
+- **Kanban interativo** com drag-and-drop entre colunas (dnd-kit)
+- **Painel de detalhes** do lead (nome, contato, etapa, observações)
+- **Templates de mensagens** para acelerar respostas frequentes
+- **Dashboard** com indicadores visuais do funil
+- **Dados locais mockados** para demonstração sem dependência externa
+- **Interface responsiva** com Tailwind CSS e Radix UI
+- **Formulários validados** com React Hook Form e Zod
+
+> **Nota sobre demonstração:** O projeto utiliza exclusivamente dados locais fictícios. Não há integração com serviços externos, envio de mensagens reais ou acesso a dados de produção nesta versão.
+
+---
+
+## Stack Tecnológica
+
+| Categoria | Tecnologias |
 |---|---|
-| React 18 | Interface de usuário |
-| TypeScript | Tipagem estática |
-| TanStack Router | Roteamento tipado |
-| Tailwind CSS | Estilização |
-| dnd-kit | Drag and drop |
-| shadcn/ui | Componentes de UI |
-| Vite | Build tool |
+| **Frontend** | React 18, TypeScript |
+| **Roteamento** | TanStack Router, TanStack Start |
+| **Estado / Dados** | TanStack Query, mock-data local |
+| **Drag-and-drop** | dnd-kit |
+| **UI / Estilo** | Radix UI, shadcn/ui, Tailwind CSS |
+| **Formulários** | React Hook Form, Zod |
+| **Gráficos** | Recharts |
+| **Build / Deploy** | Vite, Cloudflare Workers |
 
 ---
 
-## Como Rodar Localmente
-
-```bash
-# Clone o repositório
-git clone https://github.com/Andrearodri/lead-flow-studio.git
-
-# Entre na pasta
-cd lead-flow-studio
-
-# Instale as dependências
-npm install
-
-# Inicie o servidor de desenvolvimento
-npm run dev
-```
-
-Acesse `http://localhost:5173` no navegador.
-
----
-
-## Estrutura do Projeto
+## Arquitetura
 
 ```
 src/
 ├── components/
-│   ├── leads/          # Componentes do Kanban e painel de leads
-│   └── ui/             # Componentes de UI reutilizáveis
-├── routes/             # Rotas da aplicação (TanStack Router)
-├── data/               # Mock data para desenvolvimento
-└── types/              # Tipos TypeScript
+│   ├── leads/          # Kanban, LeadCard, LeadDetailSheet, Header, Sidebar
+│   ├── quick-replies/  # Templates de mensagens
+│   └── ui/             # Componentes Radix UI / shadcn
+├── routes/             # Páginas e rotas (TanStack Router)
+├── hooks/              # Custom hooks
+├── lib/                # Utilitários
+└── types/              # Tipos TypeScript globais
 ```
 
 ---
 
-## Aprendizados
+## Como Executar Localmente
 
-- Implementação de drag and drop com dnd-kit em um contexto real de CRM
-- Roteamento tipado com TanStack Router
-- Arquitetura de componentes em projetos React com TypeScript
-- Gestão de estado local com hooks customizados
+```bash
+# 1. Clone o repositório
+git clone https://github.com/Andrearodri/lead-flow-studio.git
+cd lead-flow-studio
+
+# 2. Instale as dependências
+npm install
+
+# 3. Inicie o servidor de desenvolvimento
+npm run dev
+```
+
+Acesse em: `http://localhost:5173`
+
+### Scripts disponíveis
+
+| Script | Descrição |
+|---|---|
+| `npm run dev` | Inicia o servidor local |
+| `npm run build` | Gera o build de produção |
+| `npm run lint` | Executa o ESLint |
+| `npm run format` | Formata o código com Prettier |
 
 ---
 
-## Próximos Passos
+## Decisões Técnicas
 
-- [ ] Dashboard com métricas (total de leads, conversão por etapa)
-- [ ] Integração com backend real
+- **TanStack Router** para roteamento tipado e type-safe
+- **dnd-kit** como solução de drag-and-drop acessível e flexível
+- **Zod + React Hook Form** para validação de formulários em runtime
+- **Mock data local** para isolar a demonstração de qualquer serviço externo
+- **Cloudflare Workers** como target de deploy pela performance na edge
+
+---
+
+## Limitações Atuais
+
+- Não há persistência de dados (sem banco de dados nesta versão)
+- Não há autenticação de usuários
+- Os dados são redefinidos a cada recarga da página
+- Deploy público ainda não publicado
+
+---
+
+## Roadmap
+
+- [ ] Deploy público (Cloudflare Workers)
+- [ ] Persistência com localStorage ou banco de dados
 - [ ] Autenticação de usuários
+- [ ] Filtros e busca de leads
+- [ ] Exportação de dados
 - [ ] Notificações e lembretes
-- [ ] Deploy público
+
+---
+
+## Atribuição
+
+Este projeto teve sua estrutura inicial criada com apoio do **Lovable** (ferramenta de desenvolvimento com IA generativa). A personalização da interface, evolução dos fluxos, configuração do projeto, documentação e validação técnica foram realizadas por André Rodrigues.
+
+---
+
+## Licença
+
+MIT — veja o arquivo [LICENSE](./LICENSE) para detalhes.
 
 ---
 
 ## Contato
 
-**André Rodrigues**  
-Desenvolvedor Full Stack Júnior  
-[GitHub](https://github.com/Andrearodri) · [LinkedIn](https://linkedin.com/in/andrearodri)
+**André Rodrigues**
+- LinkedIn: [linkedin.com/in/andreaparecidorodrigues-dev](https://www.linkedin.com/in/andreaparecidorodrigues-dev/)
+- Portfólio: [andrestudiodev.duckdns.org](https://andrestudiodev.duckdns.org/)
+- GitHub: [github.com/Andrearodri](https://github.com/Andrearodri)
