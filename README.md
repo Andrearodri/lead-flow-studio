@@ -91,7 +91,7 @@ Esses valores não devem ser commitados. Sem essas variáveis, o modo visitante 
 - o modo real depende de schema e políticas configurados fora deste repositório;
 - não há backend próprio, fila ou envio de WhatsApp em produção;
 - as telas auxiliares são protótipos visuais e não devem ser descritas como funcionalidades completas;
-- o projeto não inclui um deploy público ou screenshots versionados neste momento;
+- a demo pública está disponível em https://lead-flow-studio.vetoropus.workers.dev/; screenshots ainda não estão versionados neste momento;
 - não há arquivo de licença definido atualmente.
 
 ## Origem e atribuição
