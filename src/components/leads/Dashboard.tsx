@@ -48,11 +48,15 @@ const CustomTooltip = ({ active, payload, label, formatter }: any) => {
   return null;
 };
 
+import { toast } from 'sonner';
+
 interface DashboardProps {
   leads?: Lead[];
+  onNavigateToKanban?: () => void;
 }
 
-export function Dashboard({ leads = [] }: DashboardProps) {
+export function Dashboard({ leads = [], onNavigateToKanban }: DashboardProps) {
+
   const columns = useFunnelColumns();
   const availableTags = useTags();
   const safeLeads = leads || [];
@@ -313,7 +317,17 @@ export function Dashboard({ leads = [] }: DashboardProps) {
         
         {/* LEADS MANAGEMENT (Span 2) */}
         <div className="lg:col-span-2 h-[380px]">
-          <CardWrapper title="Gestão de Leads" action={<span className="flex items-center gap-1">Ver Detalhes <ArrowRight className="w-3 h-3"/></span>}>
+          <CardWrapper
+            title="Gestão de Leads"
+            action={
+              <button
+                onClick={() => onNavigateToKanban ? onNavigateToKanban() : toast.info("Navegando para Clientes/Leads...")}
+                className="flex items-center gap-1 hover:text-violet-700 transition-colors cursor-pointer font-medium"
+              >
+                Ver Detalhes <ArrowRight className="w-3 h-3"/>
+              </button>
+            }
+          >
             <div className="flex flex-col md:flex-row gap-6 h-full min-h-0">
               
               {/* Horizontal Bar Chart (Funil) */}

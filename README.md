@@ -1,163 +1,106 @@
 # Lead Flow Studio
 
-> Sistema avançado de gestão de leads com interface Kanban interativa, dashboard analítico de BI e simulador de automações de WhatsApp em segundo plano.
+Interactive CRM showcase built with React and TypeScript.
 
-![Status do Projeto](https://img.shields.io/badge/Status-Pronto%20para%20Portf%C3%B3lio-emerald?style=for-the-badge)
-![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue?style=for-the-badge&logo=typescript)
-![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-v4-violet?style=for-the-badge&logo=tailwindcss)
-![TanStack](https://img.shields.io/badge/TanStack-Start-ff5a1a?style=for-the-badge)
+O Lead Flow Studio é uma vitrine interativa de portfólio para explorar um fluxo comercial: leads em Kanban, detalhes de contato, templates de mensagens, métricas e uma simulação de comunicação. O projeto apresenta uma interface funcional sem exigir conta ou credenciais para o modo demonstração.
 
----
+## Demonstração
 
-## 💻 Demonstração
+Na tela de entrada, escolha **Visualizar demonstração (Modo Visitante)**. O modo demo permite:
 
-O projeto conta com um **Modo Demonstração (Ambiente de Visitante)** 100% seguro para avaliadores e recrutadores. Você pode navegar pela interface completa, simular envios de mensagens de WhatsApp e fazer edições no pipeline sem a necessidade de criar uma conta ou fornecer dados pessoais.
+- navegar pelo CRM e pelo Kanban;
+- mover leads por drag-and-drop, inclusive em telas touch;
+- abrir detalhes, editar campos locais e usar busca;
+- visualizar dashboard e gráficos derivados dos dados de demonstração;
+- criar e usar templates de respostas rápidas;
+- simular o envio de mensagens sem chamar um serviço externo.
 
-* **URL do Projeto Publicado:** *[Inserir link do deploy aqui após publicação]*
-* **Como acessar:** Na tela de login, clique no botão **"Visualizar demonstração (Modo Visitante)"**.
+Os dados do modo demo são fictícios e ficam no navegador do visitante. Nenhuma mensagem real é enviada.
 
----
+## O que é demonstração e o que é integração opcional
 
-## 📷 Screenshots
+O fluxo principal da vitrine é local e independente de Supabase. O projeto também contém um modo real opcional:
 
-### 1. Tela de Entrada (com Modo Demo)
-![Tela de Autenticação](./docs/images/screenshot_login.png)
+- **Supabase:** autenticação e persistência de leads/templates quando as variáveis públicas são configuradas. O schema, as políticas de acesso e o projeto hospedado não fazem parte deste repositório.
+- **Green API/WhatsApp:** integração experimental existente no código para um ambiente real configurado pelo operador. Ela não é usada no modo demo e não deve receber credenciais em arquivos públicos ou no frontend publicado.
 
-### 2. Quadro Kanban (Drag and Drop)
-![Kanban Principal](./docs/images/screenshot_kanban.png)
+As telas de produtos, pedidos, e-mail, campanhas, automações, planos e feedback são conceitos de interface com dados estáticos ou estado local. Elas não representam módulos de backend prontos para produção.
 
-### 3. Painel Lateral de Detalhes do Lead
-![Painel do Lead](./docs/images/screenshot_lead_detail.png)
+## Stack
 
-### 4. Templates de Mensagens Rápidas
-![Templates](./docs/images/screenshot_templates.png)
+- React 19
+- TypeScript 5.9
+- TanStack Start e TanStack Router
+- Vite 7
+- Tailwind CSS 4
+- Radix UI e Lucide React
+- @dnd-kit para drag-and-drop
+- Recharts para gráficos
+- Supabase JavaScript SDK como integração opcional
 
-### 5. Dashboard Comercial (BI)
-![Dashboard](./docs/images/screenshot_dashboard.png)
+## Arquitetura resumida
 
-### 6. Configurações e Etiquetas
-![Configurações](./docs/images/screenshot_settings.png)
-
----
-
-## 🎯 Problema que o Projeto Resolve
-
-No dia a dia comercial de pequenas e médias empresas que vendem pelo WhatsApp, a triagem manual de leads costuma ser desorganizada e lenta. Há perda frequente de contatos devido à falta de visibilidade do funil e atraso no envio de propostas comerciais.
-
-O **Lead Flow Studio** resolve esse gargalo ao:
-1. Centralizar a triagem visual no formato Kanban, separando os contatos em colunas de progresso.
-2. Permitir o disparo rápido de modelos de mensagens prontas diretamente para o WhatsApp do cliente.
-3. Automatizar o envio de propostas em segundo plano assim que o status do lead avança no funil.
-4. Exibir métricas de conversão e faturamento projetado em tempo real em um painel analítico.
-
----
-
-## 🚀 Funcionalidades
-
-* **Quadro Kanban Interativo:** Organização visual das etapas de vendas (Novos Contatos, Qualificação, Agendamento, Proposta, Fechado) com ordenação dinâmica e suporte total a Drag & Drop.
-* **Painel Lateral do Lead (LeadDetailSheet):** Visualização completa do histórico do cliente, controle de valor estimado do negócio, tags interativas, anotações de progresso e atalho rápido de comunicação.
-* **Disparo Automatizado (Vetor Opus):** Integração para envio de mensagens via WhatsApp Green API. O sistema monitora as movimentações no Kanban e dispara propostas em background quando um lead atinge a etapa de fechamento.
-* **Templates de Mensagens (Quick Replies):** CRUD completo (Criar, Ler, Atualizar e Excluir) de templates de respostas rápidas armazenados no banco de dados.
-* **Dashboard e BI:** Indicadores de desempenho de conversão (total de leads, tempo médio de espera, taxa de conversão e faturamento fechado) com gráficos de receita por serviço, leads por canal e histórico de perdas.
-* **Configuração Dinâmica:** Gerenciamento reativo de etiquetas (Tags) e colunas do funil no painel de configurações.
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-* **Front-end:** React 19, TypeScript, Tailwind CSS v4, Lucide Icons, Recharts (Gráficos), `@dnd-kit/core` (Drag and Drop).
-* **Framework:** **TanStack Start** (SSR/Server-Side Rendering de última geração).
-* **Back-end & Persistência (Modo Real):** **Supabase** (PostgreSQL, Realtime Database, Auth Service).
-* **Gateway de Mensagens (Modo Real):** **Green API** (Integração com WhatsApp).
-* **Hospedagem & Deploy:** **Cloudflare Pages / Workers** (Wranger CLI).
-
----
-
-## 📐 Arquitetura do Projeto
-
-O projeto adota uma arquitetura limpa dividida em componentes de UI, hooks reativos e serviços isolados:
-
-```
+~~~text
 src/
-├── components/
-│   ├── auth/           # Login, Cadastro e Modo Demonstração
-│   ├── leads/          # Kanban, Dashboard, Cards e Painel Lateral
-│   ├── quick-replies/  # Gestão de Templates de Mensagens
-│   ├── settings/       # Painel de Etiquetas e Etapas do Funil
-│   ├── ui/             # Componentes base (botões, inputs, dialogs)
-│   └── analytics/      # BI e métricas auxiliares
-├── hooks/              # Hooks customizados para pub/sub de estado reativo
-├── lib/                # Configuração de clientes (Supabase)
-├── routes/             # Rotas tipadas no TanStack Router
-├── services/           # Abstração de chamadas à APIs externas e DB
-└── start.ts            # Ponto de inicialização do TanStack Start
-```
+├── components/auth/          # login, cadastro e modo visitante
+├── components/leads/         # Kanban, dashboard, cards e detalhes
+├── components/quick-replies/ # templates de mensagens
+├── components/settings/      # etapas e etiquetas locais
+├── components/ui/            # componentes de interface reutilizáveis
+├── hooks/                    # estado local e hooks de domínio
+├── lib/                      # clientes e utilitários
+├── routes/                   # rota principal e shell da aplicação
+└── services/                 # acesso opcional ao Supabase e mensagens
+~~~
 
----
+Não há uma API própria neste repositório. O arquivo src/server.ts é o wrapper de execução do TanStack Start; o modo demo funciona no cliente, e o modo real depende do Supabase externo.
 
-## 🔒 Modo Demonstração e Segurança
+## Como executar
 
-Para proteger dados reais de clientes e evitar custos com faturamento de APIs externas durante avaliações públicas:
-1. **Dados em LocalStorage:** No Modo Demonstração, todos os leads, templates e modificações são mantidos localmente na memória e no `localStorage` do navegador do visitante. Nenhuma informação é persistida no banco de dados central Supabase.
-2. **Mensagens Simuladas:** Qualquer disparo automático ou manual de WhatsApp no Modo Demo intercepta a chamada de rede, aguarda um delay de rede de `800ms` e exibe um feedback visual na tela (Toast) com a mensagem: *"📱 Envio simulado com sucesso (Modo Demonstração)!"*.
-3. **Credenciais Ocultas:** Nenhum token de API ou senha é exposto nos arquivos públicos do repositório.
+Requisitos: Node.js compatível com o projeto e npm.
 
----
-
-## ⚙️ Como Rodar Localmente
-
-### 1. Clonar o repositório
-```bash
-git clone https://github.com/Andrearodri/lead-flow-studio.git
-cd lead-flow-studio
-```
-
-### 2. Instalar as dependências
-```bash
-npm install
-# ou se preferir bun:
-bun install
-```
-
-### 3. Rodar em desenvolvimento
-```bash
+~~~bash
+npm ci
 npm run dev
-```
-Acesse **`http://localhost:8080/`** no navegador. Para utilizar o Modo Real com o Supabase e salvar dados no banco, configure o arquivo `.env.local` conforme as variáveis abaixo.
+~~~
 
----
+Abra a URL exibida pelo Vite e selecione o modo visitante.
 
-## 📝 Variáveis de Ambiente
+Validações disponíveis:
 
-Crie um arquivo `.env.local` na raiz do projeto para rodar no Modo Real integrado:
+~~~bash
+npm run typecheck
+npm test
+npm run build
+~~~
 
-```env
-# Chaves públicas do Supabase (Client-Side)
+## Variáveis de ambiente opcionais
+
+Crie .env.local somente para testar o modo real com um projeto Supabase autorizado:
+
+~~~env
 VITE_SUPABASE_URL=https://seu-projeto.supabase.co
-VITE_SUPABASE_ANON_KEY=sua-chave-anon-key-aqui
-```
+VITE_SUPABASE_ANON_KEY=sua-chave-publica-aqui
+~~~
 
----
+Esses valores não devem ser commitados. Sem essas variáveis, o modo visitante continua disponível.
 
-## 💡 Aprendizados
+## Limitações conhecidas
 
-* **TanStack Start & SSR:** Compreensão de carregamento de páginas híbridas com hydration e compilação focada em Serverless (Cloudflare Workers).
-* **Gestão de Estado em Arquitetura Serverless:** Desenvolvimento de micro-stores reativas com padrões Pub/Sub para propagar estados sem depender de grandes estruturas globais como Redux.
-* **Tolerância a Falhas e Modos Híbridos:** Construção de interceptadores inteligentes em nível de serviço para alternar dinamicamente entre persistência Cloud (Supabase) e Offline (LocalStorage).
+- o modo demo usa localStorage para leads e templates; tags, etapas, notas e parte das preferências permanecem em estado local da sessão;
+- o modo real depende de schema e políticas configurados fora deste repositório;
+- não há backend próprio, fila ou envio de WhatsApp em produção;
+- as telas auxiliares são protótipos visuais e não devem ser descritas como funcionalidades completas;
+- o projeto não inclui um deploy público ou screenshots versionados neste momento;
+- não há arquivo de licença definido atualmente.
 
----
+## Origem e atribuição
 
-## 🔮 Próximos Passos
+O projeto foi iniciado a partir de uma configuração/template de TanStack Start associada ao Lovable. A UI, os fluxos de demonstração, os serviços, os testes e a documentação deste repositório foram desenvolvidos e adaptados por André Rodrigues. A atribuição das dependências permanece conforme suas respectivas licenças.
 
-- [ ] Integração com IA (Google Gemini API) para sugerir respostas rápidas e analisar o sentimento das anotações do lead.
-- [ ] Gráfico de evolução de vendas integrado com o banco de dados Supabase em tempo real.
-- [ ] Exportação de relatórios em PDF/Excel a partir da tela de Analytics.
-
----
-
-## 👤 Autor
+## Autor
 
 **André Rodrigues**
-* **GitHub:** [@Andrearodri](https://github.com/Andrearodri)
-* **LinkedIn:** [André Rodrigues](https://linkedin.com/in/andrearodri)
+
+- GitHub: [@Andrearodri](https://github.com/Andrearodri)
+- LinkedIn: [André Rodrigues](https://linkedin.com/in/andrearodri)

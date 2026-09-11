@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { getSupabaseClient } from '@/lib/supabase';
 import { type Lead, type LeadStatus, INITIAL_LEADS } from '@/components/leads/mock-data';
 
 export const leadService = {
@@ -31,8 +31,9 @@ export const leadService = {
     if (this.isDemo()) {
       return this.getDemoLeads();
     }
+    const client = getSupabaseClient();
     try {
-      const { data, error } = await supabase
+      const { data, error } = await client
         .from('leads')
         .select('*')
         .order('created_at', { ascending: false });
@@ -72,11 +73,12 @@ export const leadService = {
       return newLead;
     }
     try {
+      const client = getSupabaseClient();
       // Obter o usuário atual
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { user } } = await client.auth.getUser();
       if (!user) throw new Error('Usuário não autenticado');
 
-      const { data, error } = await supabase
+      const { data, error } = await client
         .from('leads')
         .insert([{
           user_id: user.id,
@@ -120,7 +122,7 @@ export const leadService = {
       return;
     }
     try {
-      const { error } = await supabase
+      const { error } = await getSupabaseClient()
         .from('leads')
         .update({ status })
         .eq('id', id);
@@ -143,7 +145,7 @@ export const leadService = {
       return;
     }
     try {
-      const { error } = await supabase
+      const { error } = await getSupabaseClient()
         .from('leads')
         .update({ valor_estimado: valorEstimado })
         .eq('id', id);

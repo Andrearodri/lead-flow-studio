@@ -32,6 +32,7 @@ export function Sidebar({ active, onSelect, onLogout }: SidebarProps) {
   const [userEmail, setUserEmail] = useState<string>("Sessão Ativa");
 
   useEffect(() => {
+    if (!supabase) return;
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user?.email) {
         setUserEmail(user.email);
@@ -167,7 +168,10 @@ export function Sidebar({ active, onSelect, onLogout }: SidebarProps) {
 
         {/* Upgrade Card */}
         <div className="px-5 mb-5 shrink-0 mt-auto pt-4">
-          <div className="p-3.5 rounded-xl border border-gray-100 shadow-sm bg-white hover:border-orange-200 hover:shadow-md transition-all cursor-pointer group">
+          <div
+            onClick={() => onSelect("plans")}
+            className="p-3.5 rounded-xl border border-gray-100 shadow-sm bg-white hover:border-orange-200 hover:shadow-md transition-all cursor-pointer group"
+          >
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-lg bg-orange-500 text-white flex items-center justify-center shrink-0 shadow-sm shadow-orange-500/20">
                 <Rocket className="w-4 h-4" />
@@ -180,6 +184,7 @@ export function Sidebar({ active, onSelect, onLogout }: SidebarProps) {
             </div>
           </div>
         </div>
+
 
         {/* Profile / Logout Card */}
         <div className="px-5 mb-6 shrink-0 border-t border-gray-100 pt-4">

@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 const INITIAL_ORDERS = [
   {
     id: "#ORD-2026-001",
-    client: "TechCorp Soluções",
+    client: "Empresa Demo A",
     service: "Setup de Automação WhatsApp",
     value: 1500.00,
     date: "12/05/2026",
@@ -15,7 +15,7 @@ const INITIAL_ORDERS = [
   },
   {
     id: "#ORD-2026-002",
-    client: "XP Capital Asset",
+    client: "Empresa Exemplo B",
     service: "Consultoria Comercial B2B",
     value: 9000.00,
     date: "14/05/2026",
@@ -23,7 +23,7 @@ const INITIAL_ORDERS = [
   },
   {
     id: "#ORD-2026-003",
-    client: "Opus Tech Logística",
+    client: "Empresa Demo C",
     service: "Licenciamento CRM & Integração",
     value: 499.00,
     date: "15/05/2026",
@@ -31,7 +31,7 @@ const INITIAL_ORDERS = [
   },
   {
     id: "#ORD-2026-004",
-    client: "Giga Security Ltda",
+    client: "Empresa Exemplo D",
     service: "Treinamento de Equipe",
     value: 2500.00,
     date: "10/05/2026",

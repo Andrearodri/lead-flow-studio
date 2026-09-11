@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { getSupabaseClient } from "@/lib/supabase";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sparkles, Mail, Lock, UserPlus, LogIn, ArrowRight } from 'lucide-react';
@@ -20,6 +20,7 @@ export function Auth({ onDemoLogin }: AuthProps) {
     setLoading(true);
     setError(null);
     try {
+      const supabase = getSupabaseClient();
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;

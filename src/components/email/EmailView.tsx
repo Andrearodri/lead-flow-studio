@@ -5,10 +5,10 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 const MOCK_MAILS = [
-  { id: "1", subject: "Campanha de Onboarding SaaS", sender: "marketing@opus.com", date: "Hoje, 10:45", preview: "Olá! Seja bem-vindo ao novo ecossistema de vendas...", type: "campanhas" },
-  { id: "2", subject: "Feedback sobre a Proposta Comercial", sender: "carlos.silva@techcorp.com", date: "Ontem, 16:30", preview: "Aprovaram a proposta de automação de WhatsApp?", type: "entrada" },
-  { id: "3", subject: "Rascunho: Follow-up Leads VIP", sender: "eu@crm.com", date: "15 Mai", preview: "Olá, gostaria de agendar nossa reunião para...", type: "rascunhos" },
-  { id: "4", subject: "Aviso de Faturamento Enviado", sender: "financeiro@opus.com", date: "12 Mai", preview: "Segue anexo o contrato assinado digitalmente pelas partes...", type: "enviados" },
+  { id: "1", subject: "Campanha de onboarding demo", sender: "marketing@example.com", date: "Hoje, 10:45", preview: "Olá! Seja bem-vindo à demonstração do Lead Flow Studio...", type: "campanhas" },
+  { id: "2", subject: "Feedback sobre a demonstração", sender: "contato@example.com", date: "Ontem, 16:30", preview: "A experiência do Kanban ajudou a visualizar o funil?", type: "entrada" },
+  { id: "3", subject: "Rascunho: follow-up demo", sender: "demo@lead-flow.example", date: "15 Mai", preview: "Olá, gostaria de agendar uma conversa sobre o projeto...", type: "rascunhos" },
+  { id: "4", subject: "Aviso de exemplo", sender: "financeiro@example.com", date: "12 Mai", preview: "Este conteúdo é apenas uma mensagem fictícia da vitrine...", type: "enviados" },
 ];
 
 export function EmailView() {

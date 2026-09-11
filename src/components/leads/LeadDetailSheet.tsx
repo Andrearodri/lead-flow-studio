@@ -124,7 +124,7 @@ export function LeadDetailSheet({ lead, open, onOpenChange, onMove, onUpdateTags
     }
   };
 
-  const handleSendOpusMessage = async () => {
+  const handleSendMessage = async () => {
     if (!messageBody.trim()) {
       toast.error("A mensagem não pode estar vazia.");
       return;
@@ -315,7 +315,7 @@ export function LeadDetailSheet({ lead, open, onOpenChange, onMove, onUpdateTags
             <div className="p-6 border-b border-gray-100 bg-white">
               <label className="flex items-center gap-1.5 mb-3 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
                 <MessageSquareQuote className="h-3.5 w-3.5 text-violet-500" />
-                Disparo de Mensagem (Vetor Opus)
+                Disparo de Mensagem (simulado no modo demo)
               </label>
 
               {isLoadingTemplates ? (
@@ -350,7 +350,7 @@ export function LeadDetailSheet({ lead, open, onOpenChange, onMove, onUpdateTags
               />
 
               <Button
-                onClick={handleSendOpusMessage}
+                onClick={handleSendMessage}
                 disabled={isSendingMessage || !messageBody.trim()}
                 className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold h-11 rounded-xl shadow-md shadow-violet-500/20 transition-all disabled:opacity-50"
               >
@@ -362,7 +362,7 @@ export function LeadDetailSheet({ lead, open, onOpenChange, onMove, onUpdateTags
                 ) : (
                   <>
                     <Send className="w-4 h-4 mr-2" />
-                    Enviar via Vetor Opus
+                    Enviar mensagem
                   </>
                 )}
               </Button>

@@ -5,6 +5,7 @@ import { whatsappService } from "@/services/whatsappService";
 import {
   DndContext,
   DragOverlay,
+  TouchSensor,
   PointerSensor,
   useSensor,
   useSensors,
@@ -29,7 +30,10 @@ export function KanbanBoard({ leads, setLeads, searchQuery = "", onUpdateValue }
   const [activeId, setActiveId] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
-  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 180, tolerance: 8 } }),
+  );
 
   const activeLead = leads.find((l) => l.id === activeId) ?? null;
   const selectedLead = leads.find((l) => l.id === selectedId) ?? null;
@@ -55,7 +59,8 @@ export function KanbanBoard({ leads, setLeads, searchQuery = "", onUpdateValue }
     const colTitle = targetCol?.title ?? overId;
     
     // --- LÓGICA DE AUTOMAÇÃO BACKGROUND ---
-    const isProposta = colTitle.toLowerCase().includes("proposta") || colTitle.toLowerCase().includes("orçamento") || columns.findIndex(c => c.id === overId) === 2;
+    const normalizedColumnTitle = colTitle.toLowerCase();
+    const isProposta = normalizedColumnTitle.includes("proposta") || normalizedColumnTitle.includes("orçamento");
 
     // Dispara a automação apenas se mudou de coluna
     if (isProposta && movedLead.status !== overId) {
@@ -140,7 +145,7 @@ export function KanbanBoard({ leads, setLeads, searchQuery = "", onUpdateValue }
 
   return (
     <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
-      <div className="kanban-scroll flex gap-5 overflow-x-auto px-6 pb-8 pt-6 h-full">
+      <div className="kanban-scroll flex min-w-0 max-w-full touch-pan-x overscroll-x-contain gap-5 overflow-x-auto px-4 pb-8 pt-6 sm:px-6 h-full">
         {columns.map((col) => (
           <KanbanColumn
             key={col.id}
@@ -155,7 +160,7 @@ export function KanbanBoard({ leads, setLeads, searchQuery = "", onUpdateValue }
       </div>
       <DragOverlay dropAnimation={null}>
         {activeLead ? (
-          <div className="w-[284px]">
+          <div className="w-[min(284px,calc(100vw-2rem))]">
             <LeadCard lead={activeLead} overlay />
           </div>
         ) : null}

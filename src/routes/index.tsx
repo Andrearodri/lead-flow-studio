@@ -36,7 +36,13 @@ function Index() {
   useEffect(() => {
     const isDemo = typeof window !== "undefined" && localStorage.getItem("crm_demo_mode") === "true";
     if (isDemo) {
-      setSession({ user: { email: "visitante@demo-flow.com", id: "demo-user-id" } });
+      setSession({ user: { email: "visitante@demo-flow.example", id: "demo-user-id" } });
+      return;
+    }
+
+    if (!supabase) {
+      setError("O modo real requer as variáveis VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY.");
+      setIsLoading(false);
       return;
     }
 
@@ -108,7 +114,7 @@ function Index() {
       <Auth 
         onDemoLogin={() => {
           localStorage.setItem("crm_demo_mode", "true");
-          setSession({ user: { email: "visitante@demo-flow.com", id: "demo-user-id" } });
+          setSession({ user: { email: "visitante@demo-flow.example", id: "demo-user-id" } });
         }}
       />
     );
@@ -123,12 +129,25 @@ function Index() {
           localStorage.removeItem("crm_demo_mode");
           localStorage.removeItem("demo_leads");
           localStorage.removeItem("demo_templates");
-          supabase.auth.signOut();
+          void supabase?.auth.signOut();
           setSession(null);
         }} 
       />
       <div className="flex-1 flex flex-col min-w-0">
-        <Header onAddLead={handleAddLead} searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+        <Header
+          onAddLead={handleAddLead}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          activeView={view}
+          onSelectView={setView}
+          onLogout={() => {
+            localStorage.removeItem("crm_demo_mode");
+            localStorage.removeItem("demo_leads");
+            localStorage.removeItem("demo_templates");
+            void supabase?.auth.signOut();
+            setSession(null);
+          }}
+        />
         
         {error && (
           <div className="p-4 bg-destructive/10 text-destructive text-sm text-center">
@@ -152,7 +171,7 @@ function Index() {
                 />
               )}
               {view === "quick-replies" && <QuickRepliesView />}
-              {view === "dashboard" && <Dashboard leads={leads} />}
+              {view === "dashboard" && <Dashboard leads={leads} onNavigateToKanban={() => setView("kanban")} />}
               {view === "settings" && <SettingsView leads={leads} />}
               {view === "automations" && <AutomationsView />}
               {view === "integrations" && <IntegrationsView />}

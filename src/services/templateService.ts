@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { getSupabaseClient } from '@/lib/supabase';
 import { type QuickReply, type QuickReplyCategory, INITIAL_REPLIES } from '@/components/quick-replies/mock-data';
 
 export const templateService = {
@@ -31,7 +31,7 @@ export const templateService = {
     if (this.isDemo()) {
       return this.getDemoTemplates();
     }
-    const { data, error } = await supabase
+    const { data, error } = await getSupabaseClient()
       .from('templates')
       .select('*')
       .order('created_at', { ascending: false });
@@ -59,10 +59,11 @@ export const templateService = {
       this.saveDemoTemplates([newTemplate, ...demoTemplates]);
       return newTemplate;
     }
-    const { data: { user } } = await supabase.auth.getUser();
+    const client = getSupabaseClient();
+    const { data: { user } } = await client.auth.getUser();
     if (!user) throw new Error('Usuário não autenticado');
 
-    const { data, error } = await supabase
+    const { data, error } = await client
       .from('templates')
       .insert([{
         user_id: user.id,
@@ -93,7 +94,7 @@ export const templateService = {
       this.saveDemoTemplates(updated);
       return;
     }
-    const { error } = await supabase
+    const { error } = await getSupabaseClient()
       .from('templates')
       .update({
         titulo: template.titulo,
@@ -115,7 +116,7 @@ export const templateService = {
       this.saveDemoTemplates(updated);
       return;
     }
-    const { error } = await supabase
+    const { error } = await getSupabaseClient()
       .from('templates')
       .delete()
       .eq('id', id);

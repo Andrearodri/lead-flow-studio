@@ -73,11 +73,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Vetor Opus — Inteligência em Vendas" },
-      { name: "description", content: "CRM para qualificação e triagem de leads de WhatsApp para negócios locais." },
-      { name: "author", content: "Vetor Opus" },
-      { property: "og:title", content: "Vetor Opus — Inteligência em Vendas" },
-      { property: "og:description", content: "Painel Kanban para qualificar leads de WhatsApp." },
+      { title: "Lead Flow Studio — Interactive CRM Showcase" },
+      { name: "description", content: "Interactive CRM showcase for lead management, Kanban workflows, dashboards, and simulated messaging." },
+      { name: "author", content: "André Rodrigues" },
+      { property: "og:title", content: "Lead Flow Studio — Interactive CRM Showcase" },
+      { property: "og:description", content: "Explore a responsive CRM interface with Kanban workflows, dashboards, templates, and demo messaging." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -96,7 +96,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <HeadContent />
       </head>

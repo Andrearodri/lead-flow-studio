@@ -85,10 +85,10 @@ export function SettingsView({ leads = [] }: SettingsViewProps) {
 /*  Profile Tab                                                              */
 /* ────────────────────────────────────────────────────────────────────────── */
 function ProfileTab() {
-  const [companyName, setCompanyName] = useState("Vetor Opus");
-  const [responsibleName, setResponsibleName] = useState("Marina Alves");
-  const [email, setEmail] = useState("marina@vetoropus.com.br");
-  const [phone, setPhone] = useState("+55 11 99812-4523");
+  const [companyName, setCompanyName] = useState("Empresa Demo");
+  const [responsibleName, setResponsibleName] = useState("Usuário Demo");
+  const [email, setEmail] = useState("demo@lead-flow.example");
+  const [phone, setPhone] = useState("+55 00 90000-0099");
 
   return (
     <div className="rounded-xl border border-border bg-card p-6 shadow-sm mt-4 max-w-2xl space-y-6">

@@ -164,6 +164,12 @@
 }
 
 @layer utilities {
+  .kanban-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+
   .kanban-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
   .kanban-scroll::-webkit-scrollbar-thumb {
     background: color-mix(in oklab, var(--foreground) 12%, transparent);

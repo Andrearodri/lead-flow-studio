@@ -71,7 +71,7 @@ export function LeadCard({
       className={cn(
         "group relative rounded-xl border border-border bg-card p-3.5 cursor-grab active:cursor-grabbing animate-lead-in",
         "shadow-[0_1px_0_0_rgba(0,0,0,0.02)] transition-all duration-200",
-        "hover:-translate-y-0.5 hover:shadow-[0_8px_24px_-12px_rgba(15,23,42,0.18)] hover:border-primary/30",
+        "touch-manipulation hover:-translate-y-0.5 hover:shadow-[0_8px_24px_-12px_rgba(15,23,42,0.18)] hover:border-primary/30",
         isDragging && !overlay && "opacity-40",
         overlay && "shadow-[0_20px_40px_-15px_rgba(15,23,42,0.35)] rotate-1",
         isIdle && "ring-1 ring-red-500",
@@ -98,7 +98,7 @@ export function LeadCard({
             )}
           </div>
         </div>
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5 -m-1">
+        <div className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity flex items-center gap-0.5 -m-1">
           <button
             className="text-muted-foreground hover:text-emerald-500 hover:bg-emerald-500/10 p-1.5 rounded transition-colors"
             onPointerDown={(e) => { e.stopPropagation(); }}
