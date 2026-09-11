@@ -1,11 +1,11 @@
 import { useDroppable } from "@dnd-kit/core";
 import { Plus } from "lucide-react";
 import { LeadCard } from "./LeadCard";
-import type { Lead, LeadStatus } from "./mock-data";
+import type { Lead } from "./mock-data";
 import { cn } from "@/lib/utils";
 
 interface Props {
-  id: LeadStatus;
+  id: string;
   title: string;
   hint: string;
   accent: string;
@@ -17,7 +17,7 @@ export function KanbanColumn({ id, title, hint, accent, leads, onSelectLead }: P
   const { setNodeRef, isOver } = useDroppable({ id });
 
   return (
-    <div className="flex flex-col w-[300px] shrink-0">
+    <div className="flex flex-col w-[min(300px,calc(100vw-2rem))] shrink-0">
       <div className="flex items-center justify-between px-1 mb-3">
         <div className="flex items-center gap-2 min-w-0">
           <span className={cn("h-2 w-2 rounded-full", accent)} />

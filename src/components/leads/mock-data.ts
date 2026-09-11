@@ -1,4 +1,8 @@
-export type LeadStatus = "novos" | "qualificacao" | "agendamento" | "fechado";
+/**
+ * LeadStatus is now a dynamic string to support user-created funnel columns.
+ * The funnelService is the source of truth for valid column IDs.
+ */
+export type LeadStatus = string;
 
 export interface Lead {
   id: string;
@@ -8,12 +12,18 @@ export interface Lead {
   esperaMin: number;
   status: LeadStatus;
   iniciais: string;
+  /** IDs das tags atribuídas a este lead */
+  tags?: string[];
+  /** Valor estimado do negócio em R$ */
+  valorEstimado?: number;
 }
 
+/** @deprecated Use funnelService.getColumns() instead. Kept for initialization. */
 export const COLUMNS: { id: LeadStatus; title: string; hint: string; accent: string }[] = [
   { id: "novos", title: "Novos Contatos", hint: "Leads que acabaram de chegar", accent: "bg-info" },
   { id: "qualificacao", title: "Em Qualificação", hint: "Conversa em andamento", accent: "bg-warning" },
   { id: "agendamento", title: "Agendamento / Visita", hint: "Reunião marcada", accent: "bg-primary" },
+  { id: "proposta", title: "Proposta / Orçamento", hint: "Proposta enviada ao cliente", accent: "bg-violet-500" },
   { id: "fechado", title: "Fechado / Ganho", hint: "Venda concluída", accent: "bg-success" },
 ];
 
@@ -27,23 +37,32 @@ const make = (
   servico: string,
   esperaMin: number,
   status: LeadStatus,
-): Lead => ({ id, nome, telefone, servico, esperaMin, status, iniciais: ini(nome) });
+): Lead => ({ 
+  id, 
+  nome, 
+  telefone, 
+  servico, 
+  esperaMin, 
+  status, 
+  iniciais: ini(nome),
+  valorEstimado: Math.floor(Math.random() * 15000) + 1000
+});
 
 export const INITIAL_LEADS: Lead[] = [
-  make("1", "João Silva", "+55 11 99812-4523", "Consultoria", 12, "novos"),
-  make("2", "Mariana Costa", "+55 21 99711-2210", "Orçamento", 27, "novos"),
-  make("3", "Rafael Almeida", "+55 31 98822-5544", "Plano Premium", 4, "novos"),
-  make("4", "Beatriz Nogueira", "+55 47 99654-1100", "Demonstração", 41, "novos"),
+  make("1", "Contato Demo 01", "+55 00 90000-0001", "Consultoria", 12, "novos"),
+  make("2", "Contato Demo 02", "+55 00 90000-0002", "Orçamento", 27, "novos"),
+  make("3", "Contato Demo 03", "+55 00 90000-0003", "Plano Premium", 4, "novos"),
+  make("4", "Contato Demo 04", "+55 00 90000-0004", "Demonstração", 41, "novos"),
 
-  make("5", "Carlos Henrique", "+55 11 99100-7788", "Consultoria", 65, "qualificacao"),
-  make("6", "Letícia Ramos", "+55 19 98477-3321", "Orçamento", 33, "qualificacao"),
-  make("7", "Pedro Martins", "+55 51 99966-2014", "Suporte Técnico", 18, "qualificacao"),
+  make("5", "Contato Demo 05", "+55 00 90000-0005", "Consultoria", 65, "qualificacao"),
+  make("6", "Contato Demo 06", "+55 00 90000-0006", "Orçamento", 33, "qualificacao"),
+  make("7", "Contato Demo 07", "+55 00 90000-0007", "Suporte Técnico", 18, "qualificacao"),
 
-  make("8", "Ana Paula Souza", "+55 11 99834-7766", "Visita Técnica", 120, "agendamento"),
-  make("9", "Felipe Rodrigues", "+55 41 99201-9988", "Reunião Comercial", 240, "agendamento"),
+  make("8", "Contato Demo 08", "+55 00 90000-0008", "Visita Técnica", 120, "agendamento"),
+  make("9", "Contato Demo 09", "+55 00 90000-0009", "Reunião Comercial", 240, "agendamento"),
 
-  make("10", "Juliana Pereira", "+55 11 98712-4521", "Plano Anual", 1440, "fechado"),
-  make("11", "Ricardo Gomes", "+55 27 99654-8821", "Consultoria", 2880, "fechado"),
+  make("10", "Contato Demo 10", "+55 00 90000-0010", "Plano Anual", 1440, "fechado"),
+  make("11", "Contato Demo 11", "+55 00 90000-0011", "Consultoria", 2880, "fechado"),
 ];
 
 export function formatEspera(min: number): string {

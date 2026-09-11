@@ -1,140 +1,106 @@
 # Lead Flow Studio
 
-> Aplicação de gestão de leads com dashboard, quadro Kanban interativo, organização por etapas do funil de vendas, painel de detalhes e templates de mensagens.
+Interactive CRM showcase built with React and TypeScript.
 
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![TypeScript](https://img.shields.io/badge/TypeScript-96%25-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+O Lead Flow Studio é uma vitrine interativa de portfólio para explorar um fluxo comercial: leads em Kanban, detalhes de contato, templates de mensagens, métricas e uma simulação de comunicação. O projeto apresenta uma interface funcional sem exigir conta ou credenciais para o modo demonstração.
 
----
+## Demonstração
 
-## O Problema
+Na tela de entrada, escolha **Visualizar demonstração (Modo Visitante)**. O modo demo permite:
 
-Equipes comerciais frequentemente perdem leads porque não têm visibilidade clara sobre o pipeline de vendas. Saber em qual etapa cada lead está, o que já foi feito e o que precisa acontecer é essencial para converter mais.
+- navegar pelo CRM e pelo Kanban;
+- mover leads por drag-and-drop, inclusive em telas touch;
+- abrir detalhes, editar campos locais e usar busca;
+- visualizar dashboard e gráficos derivados dos dados de demonstração;
+- criar e usar templates de respostas rápidas;
+- simular o envio de mensagens sem chamar um serviço externo.
 
-## A Solução
+Os dados do modo demo são fictícios e ficam no navegador do visitante. Nenhuma mensagem real é enviada.
 
-O Lead Flow Studio oferece um painel visual tipo Kanban para organizar leads por etapa do funil, com painel de detalhes completo por lead e templates de mensagens prontos para agilizar o atendimento.
+## O que é demonstração e o que é integração opcional
 
----
+O fluxo principal da vitrine é local e independente de Supabase. O projeto também contém um modo real opcional:
 
-## Funcionalidades Implementadas
+- **Supabase:** autenticação e persistência de leads/templates quando as variáveis públicas são configuradas. O schema, as políticas de acesso e o projeto hospedado não fazem parte deste repositório.
+- **Green API/WhatsApp:** integração experimental existente no código para um ambiente real configurado pelo operador. Ela não é usada no modo demo e não deve receber credenciais em arquivos públicos ou no frontend publicado.
 
-- **Kanban interativo** com drag-and-drop entre colunas (dnd-kit)
-- **Painel de detalhes** do lead (nome, contato, etapa, observações)
-- **Templates de mensagens** para acelerar respostas frequentes
-- **Dashboard** com indicadores visuais do funil
-- **Dados locais mockados** para demonstração sem dependência externa
-- **Interface responsiva** com Tailwind CSS e Radix UI
-- **Formulários validados** com React Hook Form e Zod
+As telas de produtos, pedidos, e-mail, campanhas, automações, planos e feedback são conceitos de interface com dados estáticos ou estado local. Elas não representam módulos de backend prontos para produção.
 
-> **Nota sobre demonstração:** O projeto utiliza exclusivamente dados locais fictícios. Não há integração com serviços externos, envio de mensagens reais ou acesso a dados de produção nesta versão.
+## Stack
 
----
+- React 19
+- TypeScript 5.9
+- TanStack Start e TanStack Router
+- Vite 7
+- Tailwind CSS 4
+- Radix UI e Lucide React
+- @dnd-kit para drag-and-drop
+- Recharts para gráficos
+- Supabase JavaScript SDK como integração opcional
 
-## Stack Tecnológica
+## Arquitetura resumida
 
-| Categoria | Tecnologias |
-|---|---|
-| **Frontend** | React 18, TypeScript |
-| **Roteamento** | TanStack Router, TanStack Start |
-| **Estado / Dados** | TanStack Query, mock-data local |
-| **Drag-and-drop** | dnd-kit |
-| **UI / Estilo** | Radix UI, shadcn/ui, Tailwind CSS |
-| **Formulários** | React Hook Form, Zod |
-| **Gráficos** | Recharts |
-| **Build / Deploy** | Vite, Cloudflare Workers |
-
----
-
-## Arquitetura
-
-```
+~~~text
 src/
-├── components/
-│   ├── leads/          # Kanban, LeadCard, LeadDetailSheet, Header, Sidebar
-│   ├── quick-replies/  # Templates de mensagens
-│   └── ui/             # Componentes Radix UI / shadcn
-├── routes/             # Páginas e rotas (TanStack Router)
-├── hooks/              # Custom hooks
-├── lib/                # Utilitários
-└── types/              # Tipos TypeScript globais
-```
+├── components/auth/          # login, cadastro e modo visitante
+├── components/leads/         # Kanban, dashboard, cards e detalhes
+├── components/quick-replies/ # templates de mensagens
+├── components/settings/      # etapas e etiquetas locais
+├── components/ui/            # componentes de interface reutilizáveis
+├── hooks/                    # estado local e hooks de domínio
+├── lib/                      # clientes e utilitários
+├── routes/                   # rota principal e shell da aplicação
+└── services/                 # acesso opcional ao Supabase e mensagens
+~~~
 
----
+Não há uma API própria neste repositório. O arquivo src/server.ts é o wrapper de execução do TanStack Start; o modo demo funciona no cliente, e o modo real depende do Supabase externo.
 
-## Como Executar Localmente
+## Como executar
 
-```bash
-# 1. Clone o repositório
-git clone https://github.com/Andrearodri/lead-flow-studio.git
-cd lead-flow-studio
+Requisitos: Node.js compatível com o projeto e npm.
 
-# 2. Instale as dependências
-npm install
-
-# 3. Inicie o servidor de desenvolvimento
+~~~bash
+npm ci
 npm run dev
-```
+~~~
 
-Acesse em: `http://localhost:5173`
+Abra a URL exibida pelo Vite e selecione o modo visitante.
 
-### Scripts disponíveis
+Validações disponíveis:
 
-| Script | Descrição |
-|---|---|
-| `npm run dev` | Inicia o servidor local |
-| `npm run build` | Gera o build de produção |
-| `npm run lint` | Executa o ESLint |
-| `npm run format` | Formata o código com Prettier |
+~~~bash
+npm run typecheck
+npm test
+npm run build
+~~~
 
----
+## Variáveis de ambiente opcionais
 
-## Decisões Técnicas
+Crie .env.local somente para testar o modo real com um projeto Supabase autorizado:
 
-- **TanStack Router** para roteamento tipado e type-safe
-- **dnd-kit** como solução de drag-and-drop acessível e flexível
-- **Zod + React Hook Form** para validação de formulários em runtime
-- **Mock data local** para isolar a demonstração de qualquer serviço externo
-- **Cloudflare Workers** como target de deploy pela performance na edge
+~~~env
+VITE_SUPABASE_URL=https://seu-projeto.supabase.co
+VITE_SUPABASE_ANON_KEY=sua-chave-publica-aqui
+~~~
 
----
+Esses valores não devem ser commitados. Sem essas variáveis, o modo visitante continua disponível.
 
-## Limitações Atuais
+## Limitações conhecidas
 
-- Não há persistência de dados (sem banco de dados nesta versão)
-- Não há autenticação de usuários
-- Os dados são redefinidos a cada recarga da página
-- Deploy público ainda não publicado
+- o modo demo usa localStorage para leads e templates; tags, etapas, notas e parte das preferências permanecem em estado local da sessão;
+- o modo real depende de schema e políticas configurados fora deste repositório;
+- não há backend próprio, fila ou envio de WhatsApp em produção;
+- as telas auxiliares são protótipos visuais e não devem ser descritas como funcionalidades completas;
+- o projeto não inclui um deploy público ou screenshots versionados neste momento;
+- não há arquivo de licença definido atualmente.
 
----
+## Origem e atribuição
 
-## Roadmap
+O projeto foi iniciado a partir de uma configuração/template de TanStack Start associada ao Lovable. A UI, os fluxos de demonstração, os serviços, os testes e a documentação deste repositório foram desenvolvidos e adaptados por André Rodrigues. A atribuição das dependências permanece conforme suas respectivas licenças.
 
-- [ ] Deploy público (Cloudflare Workers)
-- [ ] Persistência com localStorage ou banco de dados
-- [ ] Autenticação de usuários
-- [ ] Filtros e busca de leads
-- [ ] Exportação de dados
-- [ ] Notificações e lembretes
-
----
-
-## Atribuição
-
-Este projeto teve sua estrutura inicial criada com apoio do **Lovable** (ferramenta de desenvolvimento com IA generativa). A personalização da interface, evolução dos fluxos, configuração do projeto, documentação e validação técnica foram realizadas por André Rodrigues.
-
----
-
-## Licença
-
-MIT — veja o arquivo [LICENSE](./LICENSE) para detalhes.
-
----
-
-## Contato
+## Autor
 
 **André Rodrigues**
-- LinkedIn: [linkedin.com/in/andreaparecidorodrigues-dev](https://www.linkedin.com/in/andreaparecidorodrigues-dev/)
-- Portfólio: [andrestudiodev.duckdns.org](https://andrestudiodev.duckdns.org/)
-- GitHub: [github.com/Andrearodri](https://github.com/Andrearodri)
+
+- GitHub: [@Andrearodri](https://github.com/Andrearodri)
+- LinkedIn: [André Rodrigues](https://linkedin.com/in/andrearodri)
